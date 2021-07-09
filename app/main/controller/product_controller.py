@@ -10,6 +10,7 @@ from typing import Dict, Tuple
 
 api = ProductDto.api
 _product = ProductDto.product
+_product_update = ProductDto.product_update
 
 
 @api.route('/')
@@ -47,10 +48,10 @@ class Product(Resource):
         else:
             return product
     
-    @api.expect(_product, validate=True)
+    @api.expect(_product_update, validate=True)
     @api.response(200, 'Product successfully updated.')
     @api.doc('update product')
-    @api.marshal_with(_product)
+    @api.marshal_with(_product_update)
     @token_required
     @seller_token_required_for_product
     def put(self, id):

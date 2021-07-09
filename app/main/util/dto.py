@@ -35,6 +35,12 @@ class ProductDto:
         'cost': fields.Float(required=True, description='cost of product'),
         'product_name': fields.String(required=True, description='product name')
     })
+    product_update = api.model('product_update', {
+        'id': fields.Integer(readonly=True, description='product identifier'),
+        'amount_available': fields.Integer(required=False, description='amount available'),
+        'cost': fields.Float(required=False, description='cost of product'),
+        'product_name': fields.String(required=False, description='product name')
+    })
 
 
 class AuthDto:

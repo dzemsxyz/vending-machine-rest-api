@@ -18,9 +18,12 @@ def save_product(data) -> Tuple[Dict, int]:
 def update_product(data, id) -> Tuple[Dict, int]:
     product = Product.query.filter_by(id=id).one_or_none()
     if product:
-        product.amount_available=data['amount_available']
-        product.product_name=data['product_name']
-        product.cost=data['cost']
+        if 'amount_available' in data:
+            product.amount_available=data['amount_available']
+        if 'product_name' in data:
+            product.product_name=data['product_name']
+        if 'cost' in data:
+            product.cost=data['cost']
         save_changes(product)
         return product, 200
     else:
