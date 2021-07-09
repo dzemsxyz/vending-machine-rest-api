@@ -7,11 +7,15 @@ class UserDto:
     user = api.model('user', {
         'id': fields.Integer(readonly=True, description='user identifier'),
         'username': fields.String(required=True, description='user username'),
-        'deposit': fields.Float(required=False, description='the deposit'),
+        'deposit': fields.Float(readonly=True, description='the deposit'),
         'password': fields.String(required=True, description='user password'),
         'role': fields.String(required=True, description='user role')
     })
-    register = api.model('user', {
+    user_update = api.model('user_update', {
+        'id': fields.Integer(readonly=True, description='user identifier'),
+        'username': fields.String(required=False, description='user username')
+    })
+    register = api.model('user_register', {
         'username': fields.String(required=True, description='user username'),
         'password': fields.String(required=True, description='user password')
     })

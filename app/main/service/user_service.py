@@ -9,6 +9,16 @@ from typing import Dict, Tuple
 
 allowed_coins = [1, 0.5, 0.2, 0.1, 0.05]
 
+def amount_to_coins(amount):
+    coins = []
+    while amount >= 0.05:
+        for coin in allowed_coins:
+            if coin <= amount:
+                coins.append(coin)
+                amount=round(amount-coin, 2)
+                break
+    return coins
+
 def save_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
     user = User.query.filter_by(username=data['username']).first()
     if not user:
@@ -30,10 +40,8 @@ def save_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
 def update_user(data: Dict[str, str], id) -> Tuple[Dict[str, str], int]:
     user = User.query.filter_by(id=id).first()
     if user:
-        user.username=data['username']
-        user.deposit=data['deposit']
-        user.password=data['password']
-        user.role=UserRoleEnum[data['role']].value
+        if 'username' in data:
+            user.username=data['username']
         save_changes(user)
         return user, 200
     else:
@@ -85,7 +93,7 @@ def buy(data: Dict[str, str], user) -> Tuple[Dict[str, str], int]:
         save_product(product)
         response_object = {
             'spent': final_cost,
-            'change': user.deposit,
+            'change': amount_to_coins(user.deposit),
             'products_bought': data['amount'],
         }
         return response_object, 200

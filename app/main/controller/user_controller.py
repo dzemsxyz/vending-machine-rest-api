@@ -18,6 +18,7 @@ from typing import Dict, Tuple
 
 api = UserDto.api
 _user = UserDto.user
+_user_update = UserDto.user_update
 _deposit = UserDto.deposit
 _buy = UserDto.buy
 
@@ -53,7 +54,7 @@ class User(Resource):
         else:
             return user
 
-    @api.expect(_user, validate=True)
+    @api.expect(_user_update, validate=True)
     @api.response(200, 'User successfully updated.')
     @api.doc('update user')
     @api.marshal_with(_user)

@@ -237,6 +237,6 @@ class TestUserEndpoints(BaseTestCase):
         )
         data = json.loads(response.data.decode())
         self.assertTrue(data['spent'] == 1)
-        self.assertTrue(data['change'] == 0)
+        self.assertTrue(data['change'] == [])
         self.assertTrue(data['products_bought'] == 1)
         self.assertEqual(response.status_code, 200)
